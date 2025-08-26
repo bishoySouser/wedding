@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Wedding Access Code</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f9f7f7 0%, #f0ece2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #8a6d3b, #5a4a2a);
+            color: white;
+            padding: 30px 20px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .instructions {
+            margin-bottom: 25px;
+            color: #5a4a2a;
+            font-size: 16px;
+        }
+        
+        .passcode-input {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .passcode-input input {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .passcode-input input:focus {
+            border-color: #8a6d3b;
+            box-shadow: 0 0 10px rgba(138, 109, 59, 0.3);
+        }
+        
+        .submit-btn {
+            background: #8a6d3b;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .submit-btn:hover {
+            background: #5a4a2a;
+        }
+        
+        .message {
+            min-height: 24px;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+        
+        .error {
+            color: #e74c3c;
+        }
+        
+        .success {
+            color: #27ae60;
+        }
+        
+        .hint {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .floral-decoration {
+            margin: 20px 0;
+            color: #8a6d3b;
+            font-size: 24px;
+        }
+        
+        .couple-names {
+            font-size: 18px;
+            color: #5a4a2a;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 500px) {
+            .passcode-input input {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Wedding Celebration</h1>
+            <p>Enter access code to view the invitation</p>
+        </div>
+        
+        <div class="content">
+            <div class="floral-decoration">
+                <i class="fas fa-heart"></i>
+            </div>
+            
+            <p class="instructions">Please enter the 4-digit code provided on your invitation</p>
+            
+            <div class="passcode-input">
+                <input type="text" maxlength="1" id="digit1" autofocus>
+                <input type="text" maxlength="1" id="digit2">
+                <input type="text" maxlength="1" id="digit3">
+                <input type="text" maxlength="1" id="digit4">
+            </div>
+            
+            <div class="message" id="message"></div>
+            
+            <button class="submit-btn" id="submitBtn">Submit</button>
+            
+            <div class="couple-names">Bishoy & Sandy</div>
+            
+            <div class="hint">
+                Hint: Try 0910
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const digit1 = document.getElementById('digit1');
+            const digit2 = document.getElementById('digit2');
+            const digit3 = document.getElementById('digit3');
+            const digit4 = document.getElementById('digit4');
+            const message = document.getElementById('message');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Auto-tab between inputs
+            const inputs = [digit1, digit2, digit3, digit4];
+            
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1) {
+                        if (index < inputs.length - 1) {
+                            inputs[index + 1].focus();
+                        }
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value === '') {
+                        if (index > 0) {
+                            inputs[index - 1].focus();
+                        }
+                    }
+                });
+            });
+            
+            // Validate the passcode
+            function validatePasscode() {
+                const code = digit1.value + digit2.value + digit3.value + digit4.value;
+                
+                if (code.length !== 4) {
+                    showMessage('Please enter all 4 digits', 'error');
+                    return false;
+                }
+                
+                if (code === '0910') {
+                    showMessage('Access granted! Redirecting...', 'success');
+                    
+                    // Simulate a delay before redirection
+                    setTimeout(function() {
+                        window.location.href = './wedding-invitation.html';
+                    }, 1500);
+                    
+                    return true;
+                } else {
+                    showMessage('Incorrect code. Please try again.', 'error');
+                    resetInputs();
+                    return false;
+                }
+            }
+            
+            // Show message
+            function showMessage(text, type) {
+                message.textContent = text;
+                message.className = 'message ' + type;
+            }
+            
+            // Reset all inputs
+            function resetInputs() {
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+                digit1.focus();
+            }
+            
+            // Submit button click event
+            submitBtn.addEventListener('click', validatePasscode);
+            
+            // Also allow Enter key to submit
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    validatePasscode();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bishoy & Sandy Wedding</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f9f7f7 0%, #f0ece2 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header and Navigation */
+        header {
+            padding: 25px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            color: #8a6d3b;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #666;
+            margin: 0 15px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: #8a6d3b;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: #8a6d3b;
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #8a6d3b, transparent);
+        }
+        
+        .hero h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            font-size: 18px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .couple-names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 70px;
+            font-weight: 300;
+            margin: 30px 0;
+            line-height: 1.1;
+            position: relative;
+            display: inline-block;
+            color: #5a4a2a;
+        }
+        
+        .couple-names span {
+            display: inline-block;
+        }
+        
+        .ampersand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 40px;
+            margin: 0 15px;
+            color: #8a6d3b;
+            vertical-align: middle;
+        }
+        
+        /* Couple Photo Section */
+        .couple-photo {
+            margin: 60px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .photo-frame {
+            position: relative;
+            padding: 15px;
+            background: #fff;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid #8a6d3b;
+            border-radius: 3px;
+            pointer-events: none;
+        }
+        
+        .couple-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            display: block;
+            border-radius: 3px;
+        }
+        
+        .photo-caption {
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        /* Locations Section */
+        .locations {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .location-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .location-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .location-icon {
+            font-size: 40px;
+            color: #8a6d3b;
+            margin-bottom: 20px;
+        }
+        
+        .location-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #5a4a2a;
+        }
+        
+        .location-details {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .location-address {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .location-time {
+            font-size: 16px;
+            font-weight: 500;
+            color: #8a6d3b;
+        }
+        
+        .map-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #8a6d3b;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .map-link:hover {
+            background: #6b5630;
+        }
+        
+        /* Decorative Elements */
+        .floral-divider {
+            margin: 40px auto;
+            width: 80px;
+            height: 40px;
+            position: relative;
+            opacity: 0.7;
+        }
+        
+        .floral-divider::before,
+        .floral-divider::after {
+            content: '\f1bb';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 24px;
+            color: #8a6d3b;
+            position: absolute;
+            top: 0;
+        }
+        
+        .floral-divider::before {
+            left: 0;
+            transform: rotate(30deg);
+        }
+        
+        .floral-divider::after {
+            right: 0;
+            transform: rotate(-30deg);
+        }
+        
+        /* Countdown Timer */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            gap: 20px;
+        }
+        
+        .countdown-item {
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .countdown-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 300;
+            color: #8a6d3b;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        
+        .countdown-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            color: #888;
+            font-size: 14px;
+            border-top: 1px solid rgba(138, 109, 59, 0.2);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .couple-names {
+                font-size: 50px;
+            }
+            
+            nav a {
+                margin: 5px 10px;
+                font-size: 13px;
+            }
+            
+            .countdown {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+            }
+            
+            .locations {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .location-card {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .couple-names {
+                font-size: 40px;
+            }
+            
+            .ampersand {
+                font-size: 30px;
+                margin: 0 10px;
+            }
+            
+            .hero h2 {
+                font-size: 16px;
+            }
+            
+            .countdown-number {
+                font-size: 32px;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">B&S</div>
+            <nav>
+                <a href="#ceremony">Ceremony</a>
+                <a href="#reception">Reception</a>
+                <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSeRnyE8yFM49frHIltnKpXPprOtNSbC8rkw63F5aOkfJF3hPQ/viewform?usp=dialog">RSVP</a>
+            </nav>
+        </header>
+        
+        <section class="hero">
+            <h2 class="fade-in">The Wedding Of</h2>
+            
+            <h1 class="couple-names">
+                <span class="name-1 fade-in">Bishoy</span>
+                <span class="ampersand fade-in">&</span>
+                <span class="name-2 fade-in">Sandy</span>
+            </h1>
+            
+            <div class="countdown">
+                <div class="countdown-item fade-in">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item fade-in">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item fade-in">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item fade-in">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Couple Photo Section -->
+        <section class="couple-photo fade-in">
+            <div class="photo-frame">
+                <img src="./images/partner.png" alt="Bishoy and Sandy" class="couple-image">
+            </div>
+        </section>
+        
+        <!-- Locations Section -->
+        <section class="locations">
+            <div class="location-card fade-in">
+                <div class="location-icon">
+                    <i class="fas fa-church"></i>
+                </div>
+                <h3 class="location-title" id="ceremony">Ceremony</h3>
+                <div class="location-details">
+                    <p class="location-address">St. Mary's Church<br>Street 15, Maadi</p>
+                    <p class="location-time">October 09, 2025 at 06:00 PM</p>
+                </div>
+                <a target="_blank" href="https://maps.app.goo.gl/P9FubzVEUXLUJS6S6" class="map-link">VIEW ON MAP</a>
+            </div>
+            
+            <div class="location-card fade-in">
+                <div class="location-icon">
+                    <i class="fas fa-glass-cheers"></i>
+                </div>
+                <h3 class="location-title" id="#reception">Reception</h3>
+                <div class="location-details">
+                    <p class="location-address">Celina - Askargroup<br>12 Nile Corniche, Maadi</p>
+                    <p class="location-time">October 09, 2025 at 8:00 PM</p>
+                </div>
+                <a target="_blank" href="https://maps.app.goo.gl/Rw2WWjfPNNCMUVNi7" class="map-link">VIEW ON MAP</a>
+            </div>
+        </section>
+        
+        <footer>
+            <p>We can't wait to celebrate our special day with you</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set the wedding date (change this to your actual wedding date)
+        const weddingDate = new Date('2025-10-09T18:00:00');
+        
+        // Countdown timer function
+        function updateCountdown() {
+            const now = new Date();
+            const diff = weddingDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Initialize countdown
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            function checkFade() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('animate');
+                    }
+                });
+            }
+            
+            // Initial check
+            checkFade();
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkFade);
+            
+            // Animate names with a slight delay
+            setTimeout(() => {
+                document.querySelector('.name-1').classList.add('animate');
+            }, 300);
+            
+            setTimeout(() => {
+                document.querySelector('.ampersand').classList.add('animate');
+            }, 600);
+            
+            setTimeout(() => {
+                document.querySelector('.name-2').classList.add('animate');
+            }, 900);
+        });
+    </script>
+</body>
+</html>
