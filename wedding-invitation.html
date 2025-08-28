@@ -250,6 +250,86 @@
             background: #6b5630;
         }
         
+        /* Calendar Button Styles */
+        .calendar-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #fff;
+            color: #8a6d3b;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 14px;
+            border: 1px solid #8a6d3b;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .calendar-btn:hover {
+            background: #8a6d3b;
+            color: white;
+        }
+        
+        .calendar-btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 10px 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .music-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #8a6d3b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .music-btn:hover {
+            background: #6b5630;
+            transform: scale(1.05);
+        }
+        
+        .music-info {
+            font-size: 14px;
+            color: #5a4a2a;
+            max-width: 0;
+            overflow: hidden;
+            transition: max-width 0.5s ease;
+            white-space: nowrap;
+        }
+        
+        .music-player:hover .music-info {
+            max-width: 200px;
+        }
+        
         /* Decorative Elements */
         .floral-divider {
             margin: 40px auto;
@@ -347,6 +427,11 @@
             .location-card {
                 min-width: 100%;
             }
+            
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -365,6 +450,14 @@
             
             .countdown-number {
                 font-size: 32px;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+            
+            .music-info {
+                display: none;
             }
         }
         
@@ -439,19 +532,29 @@
                     <p class="location-address">St. Mary's Church<br>Street 15, Maadi</p>
                     <p class="location-time">October 09, 2025 at 06:00 PM</p>
                 </div>
-                <a target="_blank" href="https://maps.app.goo.gl/P9FubzVEUXLUJS6S6" class="map-link">VIEW ON MAP</a>
+                <div class="btn-container">
+                    <a target="_blank" href="https://maps.app.goo.gl/P9FubzVEUXLUJS6S6" class="map-link">VIEW ON MAP</a>
+                    <a href="#" class="calendar-btn" id="add-ceremony-calendar">
+                        <i class="far fa-calendar-plus"></i> ADD TO CALENDAR
+                    </a>
+                </div>
             </div>
             
             <div class="location-card fade-in">
                 <div class="location-icon">
                     <i class="fas fa-glass-cheers"></i>
                 </div>
-                <h3 class="location-title" id="#reception">Reception</h3>
+                <h3 class="location-title" id="reception">Reception</h3>
                 <div class="location-details">
                     <p class="location-address">Celina - Askargroup<br>12 Nile Corniche, Maadi</p>
                     <p class="location-time">October 09, 2025 at 8:00 PM</p>
                 </div>
-                <a target="_blank" href="https://maps.app.goo.gl/Rw2WWjfPNNCMUVNi7" class="map-link">VIEW ON MAP</a>
+                <div class="btn-container">
+                    <a target="_blank" href="https://maps.app.goo.gl/Rw2WWjfPNNCMUVNi7" class="map-link">VIEW ON MAP</a>
+                    <a href="#" class="calendar-btn" id="add-reception-calendar">
+                        <i class="far fa-calendar-plus"></i> ADD TO CALENDAR
+                    </a>
+                </div>
             </div>
         </section>
         
@@ -459,6 +562,20 @@
             <p>We can't wait to celebrate our special day with you</p>
         </footer>
     </div>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <button class="music-btn" id="play-pause">
+            <i class="fas fa-play"></i>
+        </button>
+        <div class="music-info">Ebtadena - Amr Diab</div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="background-music" autoplay>
+        <source src="./audio/ebtadina.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
         // Set the wedding date (change this to your actual wedding date)
@@ -525,6 +642,88 @@
             setTimeout(() => {
                 document.querySelector('.name-2').classList.add('animate');
             }, 900);
+            
+            // Google Calendar functionality
+            function addToCalendar(eventDetails) {
+                const startTime = new Date(eventDetails.start);
+                const endTime = new Date(eventDetails.end);
+                
+                // Format dates for Google Calendar URL
+                const formatDate = (date) => {
+                    return date.toISOString().replace(/-|:|\.\d+/g, '');
+                };
+                
+                // Create Google Calendar URL
+                const baseUrl = 'https://calendar.google.com/calendar/render';
+                const params = new URLSearchParams({
+                    action: 'TEMPLATE',
+                    text: eventDetails.title,
+                    dates: `${formatDate(startTime)}/${formatDate(endTime)}`,
+                    details: eventDetails.description,
+                    location: eventDetails.location
+                });
+                
+                window.open(`${baseUrl}?${params.toString()}`, '_blank');
+            }
+            
+            // Ceremony event details
+            const ceremonyDetails = {
+                title: 'Bishoy & Sandy Wedding Ceremony',
+                start: new Date('2025-10-09T18:00:00'),
+                end: new Date('2025-10-09T19:30:00'),
+                location: 'St. Mary\'s Church, Street 15, Maadi',
+                description: 'Join us for our wedding ceremony!'
+            };
+            
+            // Reception event details
+            const receptionDetails = {
+                title: 'Bishoy & Sandy Wedding Reception',
+                start: new Date('2025-10-09T20:00:00'),
+                end: new Date('2025-10-10T00:00:00'),
+                location: 'Celina - Askargroup, 12 Nile Corniche, Maadi',
+                description: 'Join us for our wedding reception celebration!'
+            };
+            
+            // Add event listeners to calendar buttons
+            document.getElementById('add-ceremony-calendar').addEventListener('click', function(e) {
+                e.preventDefault();
+                addToCalendar(ceremonyDetails);
+            });
+            
+            document.getElementById('add-reception-calendar').addEventListener('click', function(e) {
+                e.preventDefault();
+                addToCalendar(receptionDetails);
+            });
+            
+            // Music player functionality
+            const audio = document.getElementById('background-music');
+            const playPauseBtn = document.getElementById('play-pause');
+            const playIcon = playPauseBtn.querySelector('i');
+            
+            // Try to play music when page loads (with user interaction requirement)
+            document.body.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        playIcon.classList.remove('fa-play');
+                        playIcon.classList.add('fa-pause');
+                    }).catch(error => {
+                        console.log('Autoplay prevented:', error);
+                    });
+                }
+            }, { once: true });
+            
+            // Play/Pause button functionality
+            playPauseBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                } else {
+                    audio.pause();
+                    playIcon.classList.remove('fa-pause');
+                    playIcon.classList.add('fa-play');
+                }
+            });
         });
     </script>
 </body>
